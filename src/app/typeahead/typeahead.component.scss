@@ -1,0 +1,29 @@
+h1:focus {
+  background-color: red;
+}
+
+.typeahead-container {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  label {
+    margin-bottom: 5px;
+  }
+  input {
+    padding: 5px;
+    font-size: 20px;
+  }
+  .results {
+    border: 1px solid;
+    overflow: auto;
+    .result {
+      padding: 5px;
+      &:hover {
+        cursor: pointer;
+      }
+      &.focused {
+        background-color: lightblue;
+      }
+    }
+  }
+}
