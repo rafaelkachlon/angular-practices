@@ -1,0 +1,12 @@
+<div class="board-size">
+    <div class="label">Board Size:</div>
+    <input type="radio" name="size" value="3" [ngModel]="selectedSize().toString()"
+        (ngModelChange)="changeSize($event)">
+    <label for="size">3</label>
+    <input type="radio" name="size" value="4" [ngModel]="selectedSize().toString()"
+        (ngModelChange)="changeSize($event)">
+    <label for="size">4</label>
+    <input type="radio" name="size" value="5" [ngModel]="selectedSize().toString()"
+        (ngModelChange)="changeSize($event)">
+    <label for="size">5</label>
+</div>

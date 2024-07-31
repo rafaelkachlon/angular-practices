@@ -1,0 +1,16 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  * {
+    font-family: "Audiowide", sans-serif;
+  }
+
+  .game-config {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

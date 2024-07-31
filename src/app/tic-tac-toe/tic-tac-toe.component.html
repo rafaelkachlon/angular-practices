@@ -1,0 +1,13 @@
+<div class="app-container">
+    <h1>{{title}}</h1>
+    <div class="game-config">
+        <app-board-size-selection></app-board-size-selection>
+        <button (click)="gameService.resetGame()">Reset Game</button>
+    </div>
+    <div class="current-user">Current user turn: {{isXTurn() ? 'X' : 'O'}}</div>
+    <app-game-score></app-game-score>
+    <div class="total-games">Total Games Played: {{totalPlayedGames()}}</div>
+    <app-game-board></app-game-board>
+    <div class="winner" *ngIf="winner() !== 'Draw' && winner() !== undefined">{{winner()}} won the match!</div>
+    <div class="winner" *ngIf="winner() === 'Draw'">No one won, let's try again</div>
+</div>
