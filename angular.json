@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "tic-tac-toe": {
+    "angular-practices": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/tic-tac-toe",
+            "outputPath": "dist/angular-practices",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -56,10 +56,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "tic-tac-toe:build:production"
+              "buildTarget": "angular-practices:build:production"
             },
             "development": {
-              "buildTarget": "tic-tac-toe:build:development"
+              "buildTarget": "angular-practices:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -67,7 +67,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "tic-tac-toe:build"
+            "buildTarget": "angular-practices:build"
           }
         },
         "test": {
