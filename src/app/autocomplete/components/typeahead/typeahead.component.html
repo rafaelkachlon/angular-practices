@@ -1,7 +1,7 @@
 <div class="typeahead-container">
     <label for="typeahead">{{label()}}</label>
     <input type="text" name="typeahead" autocomplete="off" [ngModel]="result()" (ngModelChange)="filterResults($event)"
-        (keydown)="onKeyDown($event)">
+        (keydown)="onKeyDown($event)" (focusout)="results.set([])" (focus)="onFocus($event)">
     <div class="results" *ngIf="results()?.length">
         <div class="result" *ngFor="let result of results(); let i = index" [class.focused]="i === focusedIndex()"
             (mouseenter)="focusedIndex.set(i)" (click)="selectResult(result)">{{result}}</div>

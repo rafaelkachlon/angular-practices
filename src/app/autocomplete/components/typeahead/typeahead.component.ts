@@ -38,7 +38,7 @@ export class TypeaheadComponent {
     this.results.set([]);
   }
 
-  public filterResults(input: string): void {
+public filterResults(input: string): void {
     this.valueChange.emit(input);
 
     if (!this.fetchFromServer()) {
@@ -64,5 +64,10 @@ export class TypeaheadComponent {
         this.selectResult(focusedResult);
       }
     }
+  }
+
+  public onFocus(event: FocusEvent) {
+    const inputElement: HTMLInputElement = event?.target as HTMLInputElement;
+    this.filterResults(inputElement.value);
   }
 }

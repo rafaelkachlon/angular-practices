@@ -41,7 +41,6 @@ export class AutocompleteComponent {
     this.fetchResultSubject
       .pipe(
         debounceTime(300),
-        distinctUntilChanged(),
         switchMap((input: string) => {
           return this.http.get<Country[]>('assets/countries/countries.json')
             .pipe(
