@@ -6,6 +6,7 @@ h1:focus {
   display: flex;
   flex-direction: column;
   width: 300px;
+  position: relative;
   label {
     margin-bottom: 5px;
   }
@@ -16,6 +17,13 @@ h1:focus {
   .results {
     border: 1px solid;
     overflow: auto;
+    position: absolute;
+    width: 100%;
+    top: 63px;
+    z-index: 1;
+    background: white;
+    max-height: 160px;
+    box-sizing: border-box;
     .result {
       padding: 5px;
       &:hover {

@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>Type Ahead</h1>
+    <h3>Offline</h3>
+    <div>
+        <div>Selected country:</div>
+        <div>{{offlineResult()}}</div>
+    </div>
+    <app-typeahead [label]="'Countries'" [data]="offlineData()" [(result)]="offlineResult"></app-typeahead>
+
+
+    <h3>Online</h3>
+    <div>
+        <div>Selected country:</div>
+        <div>{{onlineResult()}}</div>
+    </div>
+    <app-typeahead [label]="'Countries'" [data]="onlineData()" [(result)]="onlineResult"
+        (valueChange)="onValueChange($event)" [fetchFromServer]="true"></app-typeahead>
+</div>

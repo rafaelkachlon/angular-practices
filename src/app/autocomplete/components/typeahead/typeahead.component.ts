@@ -1,10 +1,10 @@
 import { NgFor, NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, Signal, signal, WritableSignal } from '@angular/core';
+import {
+  ChangeDetectionStrategy, Component, effect, input,
+  InputSignal, model, ModelSignal, output, OutputEmitterRef, signal, WritableSignal
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
-import { Country } from './models/country.model';
+
 @Component({
   selector: 'app-typeahead',
   standalone: true,
@@ -14,21 +14,39 @@ import { Country } from './models/country.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TypeaheadComponent {
-  public resultsMaxCount: number = 10;
-  public result: WritableSignal<string> = signal<string>('');
-  public data: Signal<string[]> = this.initializeData();
+
+  public data: InputSignal<string[]> = input<string[]>([]);
+  public label: InputSignal<string> = input.required<string>();
+  public maxResults: InputSignal<number> = input<number>(10);
+  public result: ModelSignal<string> = model<string>('');
+  public fetchFromServer: InputSignal<boolean> = input<boolean>(false);
   public results: WritableSignal<string[]> = signal([]);
   public focusedIndex: WritableSignal<number> = signal<number>(-1);
 
-  constructor(private readonly http: HttpClient) { }
+  public valueChange: OutputEmitterRef<string> = output<string>();
 
-  public selectResult(result: string) {
+  public constructor() {
+    effect(() => {
+      if (this.fetchFromServer()) {
+        this.results.set(this.data());
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  public selectResult(result: string): void {
     this.result.set(result);
     this.results.set([]);
   }
 
-  public filterResults(input: string) {
-    this.results.set(this.data().filter((item) => item.toLowerCase().includes(input.toLowerCase())).splice(0, this.resultsMaxCount));
+  public filterResults(input: string): void {
+    this.valueChange.emit(input);
+
+    if (!this.fetchFromServer()) {
+      const filteredResults = this.data()
+        .filter((item) => item.toLowerCase().includes(input.toLowerCase()))
+        .splice(0, this.maxResults());
+      this.results.set(filteredResults);
+    }
     this.focusedIndex.set(0);
   }
 
@@ -46,12 +64,5 @@ export class TypeaheadComponent {
         this.selectResult(focusedResult);
       }
     }
-  }
-
-  private initializeData(): Signal<string[]> {
-    return toSignal(this.http.get<Country[]>('assets/countries/countries.json')
-      .pipe(
-        map((countries) => countries.map(c => c.name))
-      ), { initialValue: [] });
   }
 }
