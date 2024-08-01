@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { GameService } from '../game.service';
+import { GameService } from '../../game.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({

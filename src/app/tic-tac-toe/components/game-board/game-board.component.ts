@@ -1,7 +1,7 @@
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Signal, WritableSignal } from '@angular/core';
-import { GameService } from '../game.service';
-import { Cell, User } from '../models/cell.model';
+import { GameService } from '../../game.service';
+import { Cell, User } from '../../models/cell.model';
 
 @Component({
   selector: 'app-game-board',

@@ -1,10 +1,10 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal, Signal, WritableSignal } from '@angular/core';
-import { GameScoreComponent } from './game-score/game-score.component';
-import { GameBoardComponent } from './game-board/game-board.component';
+import { ChangeDetectionStrategy, Component, OnInit, Signal, WritableSignal } from '@angular/core';
+import { GameScoreComponent } from './components/game-score/game-score.component';
+import { GameBoardComponent } from './components/game-board/game-board.component';
 import { GameService } from './game.service';
 import { Cell, User } from './models/cell.model';
-import { BoardSizeSelectionComponent } from './board-size-selection/board-size-selection.component';
+import { BoardSizeSelectionComponent } from './components/board-size-selection/board-size-selection.component';
 
 @Component({
   selector: 'app-tic-tac-toe',
@@ -21,7 +21,7 @@ import { BoardSizeSelectionComponent } from './board-size-selection/board-size-s
   styleUrl: './tic-tac-toe.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TicTacToeComponent {
+export class TicTacToeComponent implements OnInit {
   public readonly title: string = 'Tic Tac Toe';
 
   public cells: WritableSignal<Cell[]> = this.gameService.cells;

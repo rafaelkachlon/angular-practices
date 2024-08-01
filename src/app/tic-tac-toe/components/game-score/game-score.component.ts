@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
-import { GameService } from '../game.service';
+import { GameService } from '../../game.service';
 
 @Component({
   selector: 'app-game-score',
