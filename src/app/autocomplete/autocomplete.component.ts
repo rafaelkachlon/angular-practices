@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, Signal, WritableSignal } from '@angular/core';
 import { TypeaheadComponent } from './components/typeahead/typeahead.component';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, distinctUntilChanged, map, Subject, switchMap } from 'rxjs';
+import { debounceTime, map, Subject, switchMap } from 'rxjs';
 import { Country } from './models/country.model';
 import { HttpClient } from '@angular/common/http';
 
@@ -26,7 +26,7 @@ export class AutocompleteComponent {
     this.subscribeFetchSubject();
   }
 
-  public onValueChange(input: string) {
+  public onValueChange(input: string): void {
     this.fetchResultSubject.next(input);
   }
 

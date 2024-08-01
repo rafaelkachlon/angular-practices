@@ -1,7 +1,7 @@
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { GameService } from '../../game.service';
-import { Cell, User } from '../../models/cell.model';
+import { Cell } from '../../models/cell.model';
 
 @Component({
   selector: 'app-game-board',
@@ -13,18 +13,14 @@ import { Cell, User } from '../../models/cell.model';
 })
 export class GameBoardComponent {
 
-  public cells: WritableSignal<Cell[]> = this.gameService.cells;
-  public size: Signal<number> = this.gameService.size.asReadonly();
-  public gameOver: Signal<boolean> = this.gameService.gameOver.asReadonly();
-  private isXTurn: Signal<boolean> = this.gameService.isXTurn.asReadonly();
+  public cells: Signal<Cell[]> = this.gameService.cells;
+  public size: Signal<number> = this.gameService.size;
+  public gameOver: Signal<boolean> = this.gameService.gameOver;
 
   public constructor(private readonly gameService: GameService) { }
 
   public onCellClicked(index?: number) {
-    const currentUser: User = this.isXTurn() ? 'X' : 'O';
-    this.cells.update(cells => cells.map((c) => c.index === index ? { ...c, user: currentUser } : c));
-    this.gameService.toggleUserTurn();
-    this.gameService.checkForWinning(currentUser);
+    this.gameService.markCell(index);
   }
 
   public getStyles(): Record<string, string> {

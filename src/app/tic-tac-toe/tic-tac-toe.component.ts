@@ -1,10 +1,11 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, Signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Signal } from '@angular/core';
 import { GameScoreComponent } from './components/game-score/game-score.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
 import { GameService } from './game.service';
-import { Cell, User } from './models/cell.model';
+import { Cell } from './models/cell.model';
 import { BoardSizeSelectionComponent } from './components/board-size-selection/board-size-selection.component';
+import { Winner } from './models/types';
 
 @Component({
   selector: 'app-tic-tac-toe',
@@ -24,10 +25,10 @@ import { BoardSizeSelectionComponent } from './components/board-size-selection/b
 export class TicTacToeComponent implements OnInit {
   public readonly title: string = 'Tic Tac Toe';
 
-  public cells: WritableSignal<Cell[]> = this.gameService.cells;
-  public gameOver: WritableSignal<boolean> = this.gameService.gameOver;
-  public winner: WritableSignal<User | undefined | 'Draw'> = this.gameService.winner;
-  public isXTurn: WritableSignal<boolean> = this.gameService.isXTurn;
+  public cells: Signal<Cell[]> = this.gameService.cells;
+  public gameOver: Signal<boolean> = this.gameService.gameOver;
+  public winner: Signal<Winner> = this.gameService.winner;
+  public isXTurn: Signal<boolean> = this.gameService.isXTurn;
   public totalPlayedGames: Signal<number> = this.gameService.totalPlayedGames;
 
   public constructor(public readonly gameService: GameService) { }

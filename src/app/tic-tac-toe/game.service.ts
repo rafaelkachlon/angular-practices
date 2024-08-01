@@ -1,26 +1,29 @@
 import { computed, Injectable, Signal, signal, WritableSignal } from '@angular/core';
-import { Cell, User } from './models/cell.model';
+import { Cell } from './models/cell.model';
+import { DefaultState, GameState } from './models/game-state.model';
+import { User, Winner } from './models/types';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GameService {
-    public cells: WritableSignal<Cell[]> = signal<Cell[]>([]);
-    public totalWinsX: WritableSignal<number> = signal<number>(0);
-    public totalWinsO: WritableSignal<number> = signal<number>(0);
-    public totalDraws: WritableSignal<number> = signal<number>(0);
-    public gameOver: WritableSignal<boolean> = signal<boolean>(false);
-    public winner: WritableSignal<User | undefined | 'Draw'> = signal<User | undefined | 'Draw'>(undefined);
-    public isXTurn: WritableSignal<boolean> = signal<boolean>(true);
-    public size: WritableSignal<number> = signal<number>(3);
-
+    public cells: Signal<Cell[]> = computed(() => this.gameState().cells);
+    public totalWinsX: Signal<number> = computed(() => this.gameState().totalWinsX);
+    public totalWinsO: Signal<number> = computed(() => this.gameState().totalWinsO);
+    public totalDraws: Signal<number> = computed(() => this.gameState().totalDraws);
+    public gameOver: Signal<boolean> = computed(() => this.gameState().gameOver);
+    public winner: Signal<Winner> = computed(() => this.gameState().winner);
+    public isXTurn: Signal<boolean> = computed(() => this.gameState().isXTurn);
+    public size: Signal<number> = computed(() => this.gameState().size);
     public totalPlayedGames: Signal<number> = computed(() => {
         return this.totalWinsX() + this.totalDraws() + this.totalWinsO();
     });
 
     private winningCombinations: number[][] = [];
+    private gameState: WritableSignal<GameState> = signal<GameState>(DefaultState);
+
     public calculateWinningCombinations(size: number): void {
-        this.size.set(size);
+        this.updateSize(size);
         this.winningCombinations = [
             ...this.comboRows(),
             ...this.comboColumns(),
@@ -37,21 +40,38 @@ export class GameService {
         });
         const noMoreCells: boolean = this.cells().every(c => c.user !== undefined);
         if (hasWinner || noMoreCells) {
-            this.gameOver.set(true);
-            this.winner.set(hasWinner ? currentUser : 'Draw');
+            this.gameState.update(state => ({
+                ...state,
+                gameOver: true,
+                winner: hasWinner ? currentUser : 'Draw'
+            }));
             this.updateScores();
         }
     }
 
     public resetGame(): void {
-        this.gameOver.set(false);
-        this.cells.set(new Array(this.size() * this.size()).fill(null).map((_, i) => ({ index: i })));
-        this.toggleUserTurn();
-        this.winner.set(undefined);
+        this.gameState.update(state => ({
+            ...state,
+            gameOver: false,
+            cells: new Array(this.size() * this.size()).fill(null).map((_, i) => ({ index: i })),
+            winner: undefined,
+            isXTurn: !this.isXTurn()
+        }));
     }
 
-    public toggleUserTurn(): void {
-        this.isXTurn.update(isXturn => !isXturn);
+    public markCell(index: number | undefined): void {
+        const currentUser: User = this.isXTurn() ? 'X' : 'O';
+        this.gameState.update(state => ({
+            ...state,
+            cells: this.cells().map((c) => c.index === index ? { ...c, user: currentUser } : c),
+            isXTurn: !this.isXTurn() // Toggle user turn
+
+        }));
+        this.checkForWinning(currentUser);
+    }
+
+    private updateSize(size: number): void {
+        this.gameState.update((state) => ({ ...state, size }));
     }
 
     private updateScores(): void {
@@ -59,11 +79,11 @@ export class GameService {
             return;
         }
         if (this.winner() === 'X') {
-            this.totalWinsX.update((wins) => wins + 1);
+            this.gameState.update(state => ({ ...state, totalWinsX: this.totalWinsX() + 1 }));
         } else if (this.winner() === 'O') {
-            this.totalWinsO.update(wins => wins + 1);
+            this.gameState.update(state => ({ ...state, totalWinsO: this.totalWinsO() + 1 }));
         } else {
-            this.totalDraws.update(draws => draws + 1);
+            this.gameState.update(state => ({ ...state, totalDraws: this.totalDraws() + 1 }));
         }
     }
 
@@ -108,3 +128,4 @@ export class GameService {
         return result;
     }
 }
+
