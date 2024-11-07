@@ -40,7 +40,7 @@ export class AutocompleteComponent {
   private subscribeFetchSubject(): void {
     this.fetchResultSubject
       .pipe(
-        debounceTime(300),
+        debounceTime(500),
         switchMap((input: string) => {
           return this.http.get<Country[]>('assets/countries/countries.json')
             .pipe(

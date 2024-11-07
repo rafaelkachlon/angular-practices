@@ -1,3 +1,4 @@
 <div class="game-board" [ngClass]="{'disabled': gameOver()}" [ngStyle]="getStyles()">
-    <div class="cell" *ngFor="let cell of cells()" (click)="onCellClicked(cell.index)">{{cell.user}}</div>
+    <div class="cell" *ngFor="let cell of cells()"
+         (click)="onCellClicked(cell.index)">{{cell.user}}</div>
 </div>
