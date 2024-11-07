@@ -9,11 +9,12 @@
            (focusout)="results.set([])"
            (focus)="onFocus($event)">
     <div class="results" *ngIf="results()?.length">
+        @for (result of results(); track result; let i = $index) {
         <div class="result"
-             *ngFor="let result of results(); let i = index"
              [class.focused]="i === focusedIndex()"
              (mouseenter)="focusedIndex.set(i)"
              (click)="selectResult(result)"
              #resultItem>{{result}}</div>
+        }
     </div>
 </div>
