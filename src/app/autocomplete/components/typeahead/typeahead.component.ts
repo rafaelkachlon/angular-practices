@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-typeahead',
-  standalone: true,
   imports: [FormsModule, NgIf],
   templateUrl: './typeahead.component.html',
   styleUrl: './typeahead.component.scss',

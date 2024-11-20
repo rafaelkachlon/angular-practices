@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-autocomplete',
-  standalone: true,
   imports: [
     TypeaheadComponent
   ],

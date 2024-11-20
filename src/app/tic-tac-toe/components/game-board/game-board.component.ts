@@ -5,7 +5,6 @@ import { Cell } from '../../models/cell.model';
 
 @Component({
   selector: 'app-game-board',
-  standalone: true,
   imports: [NgClass, NgStyle],
   templateUrl: './game-board.component.html',
   styleUrl: './game-board.component.scss',

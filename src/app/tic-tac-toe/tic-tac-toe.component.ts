@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, Signal } from '@angular/core';
 import { GameScoreComponent } from './components/game-score/game-score.component';
 import { GameBoardComponent } from './components/game-board/game-board.component';
@@ -9,10 +9,7 @@ import { Winner } from './models/types';
 
 @Component({
   selector: 'app-tic-tac-toe',
-  standalone: true,
   imports: [
-    NgFor,
-    NgClass,
     NgIf,
     GameScoreComponent,
     GameBoardComponent,

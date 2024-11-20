@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-board-size-selection',
-  standalone: true,
   imports: [FormsModule],
   templateUrl: './board-size-selection.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

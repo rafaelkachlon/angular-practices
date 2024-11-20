@@ -3,7 +3,6 @@ import { GameService } from '../../game.service';
 
 @Component({
   selector: 'app-game-score',
-  standalone: true,
   imports: [],
   templateUrl: './game-score.component.html',
   styleUrl: './game-score.component.scss',
