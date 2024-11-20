@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
   ChangeDetectionStrategy, Component, effect, ElementRef, input,
   InputSignal, model, ModelSignal, output, OutputEmitterRef, QueryList, signal, ViewChildren, WritableSignal
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-typeahead',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf],
+  imports: [FormsModule, NgIf],
   templateUrl: './typeahead.component.html',
   styleUrl: './typeahead.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

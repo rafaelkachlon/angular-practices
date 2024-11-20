@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { GameService } from '../../game.service';
 import { Cell } from '../../models/cell.model';
@@ -6,7 +6,7 @@ import { Cell } from '../../models/cell.model';
 @Component({
   selector: 'app-game-board',
   standalone: true,
-  imports: [NgIf, NgClass, NgFor, NgStyle],
+  imports: [NgClass, NgStyle],
   templateUrl: './game-board.component.html',
   styleUrl: './game-board.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
